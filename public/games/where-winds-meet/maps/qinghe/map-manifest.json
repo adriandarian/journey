@@ -1,0 +1,34 @@
+{
+  "id": "qinghe",
+  "sourceWidth": 3840,
+  "sourceHeight": 2160,
+  "coordinateSystem": "normalized-image",
+  "tileSize": 512,
+  "levels": [
+    {
+      "level": 0,
+      "width": 960,
+      "height": 540,
+      "columns": 2,
+      "rows": 2,
+      "urlTemplate": "/games/where-winds-meet/maps/qinghe/tiles/0-{x}-{y}.webp"
+    },
+    {
+      "level": 1,
+      "width": 1920,
+      "height": 1080,
+      "columns": 4,
+      "rows": 3,
+      "urlTemplate": "/games/where-winds-meet/maps/qinghe/tiles/1-{x}-{y}.webp"
+    },
+    {
+      "level": 2,
+      "width": 3840,
+      "height": 2160,
+      "columns": 8,
+      "rows": 5,
+      "urlTemplate": "/games/where-winds-meet/maps/qinghe/tiles/2-{x}-{y}.webp"
+    }
+  ],
+  "confidence": "schematic"
+}

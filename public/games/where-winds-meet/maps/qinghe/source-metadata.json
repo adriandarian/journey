@@ -1,0 +1,22 @@
+{
+  "id": "qinghe-original-schematic-2026-07-11",
+  "generationDate": "2026-07-11",
+  "generator": "OpenAI built-in image generation",
+  "sourcePath": "work/imagegen/qinghe-map-source.png",
+  "generatedSource": {
+    "width": 1672,
+    "height": 941,
+    "format": "png"
+  },
+  "productionTransform": {
+    "operation": "resize-cover-centre",
+    "width": 3840,
+    "height": 2160,
+    "format": "webp",
+    "quality": 92
+  },
+  "coordinateSystem": "normalized-image",
+  "confidence": "schematic",
+  "permission": "Original project asset",
+  "prompt": "Use case: stylized-concept\nAsset type: production map substrate for an interactive open-world progression atlas\nPrimary request: an original wide top-down oblique ink-and-wash map of a fictional tenth-century Chinese-inspired river valley, designed for navigation and data overlays; connected rivers, mountain passes, bamboo forest, walled city, ferry, monasteries, villages, gates, and quiet open label-safe terrain\nStyle/medium: highly detailed monochrome Chinese ink landscape cartography on cool gray parchment, game-map clarity without resembling any existing game map\nComposition/framing: 16:9 landscape, continuous traversable world, important terrain distributed across the frame, no baked labels or markers\nLighting/mood: clear, restrained, legible terrain with subtle tonal depth and no cinematic haze\nColor palette: charcoal, slate, muted parchment gray; no sepia wash\nMaterials/textures: crisp brushwork and fine paper grain that remain legible beneath interactive route overlays\nConstraints: original geography; no text, logo, quest lines, UI, pins, people, watermark, official Where Winds Meet geometry, screenshots, or copyrighted art\nAvoid: fantasy HUD, glowing paths, bokeh, cinematic haze, decorative ribbons, empty wallpaper, illegible terrain"
+}
