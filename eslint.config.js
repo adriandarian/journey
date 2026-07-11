@@ -17,4 +17,10 @@ export default [
   {
     ignores: ['eslint.config.js', 'prettier.config.js'],
   },
+  {
+    files: ['src/components/ui/**/*.{ts,tsx}'],
+    rules: {
+      'import/consistent-type-specifier-style': 'off',
+    },
+  },
 ]
