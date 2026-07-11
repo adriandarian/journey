@@ -1,5 +1,7 @@
 # Progression Atlas Implementation Plan
 
+Status: Completed foundation execution plan. This document preserves the original task sequence and may contain historical dependency or path references; current operating context lives in `AGENTS.md`, `docs/PROJECT_CONTEXT.md`, and `docs/ROADMAP.md`.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (- [ ]) syntax for tracking.
 
 **Goal:** Build the approved multi-game progression atlas with a complete Where Winds Meet vertical slice, synchronized Map, Thread, and Timeline modes, Trace Mode, local progress, shareable state, responsive layouts, and verified renderer fallbacks.
@@ -4695,8 +4697,8 @@ The included Qinghe pack is a hand-reviewed schematic demonstration. Quest order
 
 ## Design and QA
 
-- [Approved design specification](docs/superpowers/specs/2026-07-11-progression-atlas-design.md)
-- [Visual fidelity ledger](docs/qa/progression-atlas-fidelity.md)
+- [Approved design specification](Progression%20Atlas%20Design%20Specification.md)
+- [Visual fidelity ledger](qa/progression-atlas-fidelity.md)
 ~~~
 
 - [ ] **Step 7: Run the full completion audit**

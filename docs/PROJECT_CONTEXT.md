@@ -122,9 +122,13 @@ src/features/atlas/timeline/        ordered narrative timeline
 public/games/                        reviewed map assets and generated tiles
 scripts/                             deterministic asset tooling
 tests/e2e/                           browser workflows and quality gates
+docs/Progression Atlas Design Specification.md
+                                     approved product/design specification
+docs/Progression Atlas Implementation Plan.md
+                                     completed foundation execution plan
 docs/qa/                             renderer contract and fidelity evidence
-docs/superpowers/specs/              approved product/design specification
-docs/superpowers/plans/              completed and future executable plans
+docs/superpowers/specs/assets/       approved concept images
+docs/superpowers/plans/              future executable plans
 ```
 
 ## Core data model

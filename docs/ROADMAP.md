@@ -2,7 +2,7 @@
 
 Last reviewed: 2026-07-11
 
-This roadmap is the durable sequence for growing Progression Atlas after the completed foundation slice. The approved product definition remains `docs/superpowers/specs/2026-07-11-progression-atlas-design.md`; current reality and decisions remain `docs/PROJECT_CONTEXT.md`.
+This roadmap is the durable sequence for growing Progression Atlas after the completed foundation slice. The approved product definition remains `docs/Progression Atlas Design Specification.md`; current reality and decisions remain `docs/PROJECT_CONTEXT.md`.
 
 ## North star
 

@@ -58,7 +58,7 @@ The included Qinghe pack is a hand-reviewed schematic demonstration. Quest order
 
 ## Design and QA
 
-- [Approved design specification](docs/superpowers/specs/2026-07-11-progression-atlas-design.md)
+- [Approved design specification](docs/Progression%20Atlas%20Design%20Specification.md)
 - [Visual fidelity ledger](docs/qa/progression-atlas-fidelity.md)
 
 ## Continue in another Codex session
@@ -70,7 +70,7 @@ The repository is designed to carry its own context across sessions:
 - [Continuation roadmap](docs/ROADMAP.md)
 - [Detailed continuation implementation plan](docs/superpowers/plans/2026-07-11-journey-continuation-plan.md)
 - [Session handoff template](docs/SESSION_HANDOFF.md)
-- [Completed foundation implementation plan](docs/superpowers/plans/2026-07-11-progression-atlas-implementation.md)
+- [Completed foundation implementation plan](docs/Progression%20Atlas%20Implementation%20Plan.md)
 
 Start a new Codex session in `~/personal/journey` with:
 

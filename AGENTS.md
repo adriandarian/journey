@@ -8,11 +8,11 @@ Before changing code, read these files in order:
 
 1. `docs/PROJECT_CONTEXT.md` — product goal, current implementation, architecture, decisions, and limitations.
 2. `docs/ROADMAP.md` — completed foundation, recommended next phases, gates, and exit criteria.
-3. `docs/superpowers/specs/2026-07-11-progression-atlas-design.md` — approved product and visual specification.
+3. `docs/Progression Atlas Design Specification.md` — approved product and visual specification.
 4. `docs/qa/advanced-interactive-contract.md` — renderer, state, accessibility, and performance contracts.
 5. The relevant source and tests for the subsystem being changed.
 
-The original detailed implementation plan is retained at `docs/superpowers/plans/2026-07-11-progression-atlas-implementation.md`. It describes how the completed foundation was built; do not treat its unchecked boxes as unfinished work.
+The original detailed implementation plan is retained at `docs/Progression Atlas Implementation Plan.md`. It describes how the completed foundation was built; do not treat its unchecked boxes as unfinished work.
 
 ## Identity
 

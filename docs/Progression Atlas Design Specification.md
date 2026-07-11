@@ -1,14 +1,16 @@
 # Progression Atlas Design Specification
 
-Status: Approved visual direction; written specification pending user review  
-Approval note: User replied "approved" on 2026-07-11  
-Project root: `/Users/dariana/Documents/Codex/2026-07-11/do-y`  
+Status: Approved and implemented
+
+Approval note: User replied "approved" on 2026-07-11
+
+Project root: `/Users/dariana/personal/journey`
 
 ## Approved concept set
 
-- Desktop, 1568 x 1003: `assets/progression-atlas-desktop.png`
-- Mobile portrait, 864 x 1821: `assets/progression-atlas-mobile-portrait.png`
-- Mobile landscape, 1881 x 836: `assets/progression-atlas-mobile-landscape.png`
+- Desktop, 1568 x 1003: [progression-atlas-desktop.png](superpowers/specs/assets/progression-atlas-desktop.png)
+- Mobile portrait, 864 x 1821: [progression-atlas-mobile-portrait.png](superpowers/specs/assets/progression-atlas-mobile-portrait.png)
+- Mobile landscape, 1881 x 836: [progression-atlas-mobile-landscape.png](superpowers/specs/assets/progression-atlas-mobile-landscape.png)
 
 These images are binding references for composition, hierarchy, color roles, container model, responsive behavior, and interaction staging. They are not production map assets. Their illustrated geography and sample content are intentionally schematic.
 
@@ -553,4 +555,3 @@ The objective is complete only when the current repository and rendered app prov
 - URL sharing, local persistence, offline behavior, accessibility fallbacks, reduced motion, and Canvas fallback work.
 - Tests and browser verification cover the actual requirements above.
 - Factual content has lawful provenance and the product does not claim unsupported completeness.
-
