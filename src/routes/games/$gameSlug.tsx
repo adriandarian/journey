@@ -1,14 +1,12 @@
 import { createFileRoute, notFound } from '@tanstack/react-router'
-import { useMemo } from 'react'
-import { getGameAdapter } from '@/features/atlas/content/game-adapter'
+import {
+  getGameAdapter,
+  listGames,
+} from '@/features/atlas/content/game-adapter'
 import '@/features/atlas/content/register-games'
 import { validateContentPack } from '@/features/atlas/model/validate-content-pack'
 import { normalizeWorkspaceSearch } from '@/features/atlas/routing/workspace-search'
-import { AppShell } from '@/features/atlas/components/app-shell'
-import { MapViewport } from '@/features/atlas/map/map-viewport'
-import { buildTraceModel } from '@/features/atlas/map/trace-model'
-import { deriveProgress } from '@/features/atlas/progress/progress-engine'
-import type { AtlasEntity } from '@/features/atlas/state/atlas-selection'
+import { AtlasWorkspace } from '@/features/atlas/components/atlas-workspace'
 
 export const Route = createFileRoute('/games/$gameSlug')({
   validateSearch: normalizeWorkspaceSearch,
@@ -66,71 +64,55 @@ export const Route = createFileRoute('/games/$gameSlug')({
 })
 
 export function GameWorkspaceRoute() {
-  const { pack } = Route.useLoaderData()
+  const { pack, resolvedWorld, resolvedLayer, recoveryMessage } =
+    Route.useLoaderData()
   const search = Route.useSearch()
   const navigate = Route.useNavigate()
-  const progress = useMemo(
-    () =>
-      deriveProgress(pack, {
-        completed: [],
-        choices: {},
-        current: 'first-echo',
-      }),
-    [pack],
-  )
-  const trace = useMemo(
-    () => buildTraceModel(pack, progress, search.thread ?? 'main-story'),
-    [pack, progress, search.thread],
-  )
-
-  function selectEntity(entity: AtlasEntity) {
-    void navigate({
-      replace: true,
-      search: (previous) => ({
-        ...previous,
-        step: entity.kind === 'step' ? entity.id : undefined,
-        discovery: entity.kind === 'discovery' ? entity.id : undefined,
-        location: entity.kind === 'location' ? entity.id : undefined,
-      }),
-    })
-  }
+  const params = Route.useParams()
+  const adapter = getGameAdapter(params.gameSlug)
+  if (!adapter) return null
 
   return (
-    <AppShell
-      commandBar={
-        <div className="flex h-full items-center px-4 font-serif text-xl">
-          Progression Atlas
-        </div>
-      }
-      navigation={<div className="p-4">Main story</div>}
-      viewport={
-        <MapViewport
-          pack={pack}
-          trace={trace}
-          selectedStepId={search.step}
-          selectedDiscoveryId={search.discovery}
-          selectedLocationId={search.location}
-          motionPreference="system"
-          filters={search.filters}
-          camera={{
-            center: { x: search.cx, y: search.cy },
-            zoom: search.zoom,
-          }}
-          onSelect={selectEntity}
-          onCameraChange={(camera) => {
-            void navigate({
-              replace: true,
-              search: (previous) => ({
-                ...previous,
-                cx: Number(camera.center.x.toFixed(4)),
-                cy: Number(camera.center.y.toFixed(4)),
-                zoom: Number(camera.zoom.toFixed(2)),
-              }),
-            })
-          }}
-        />
-      }
-      inspector={<div className="p-4">Select a story step</div>}
+    <AtlasWorkspace
+      adapter={adapter}
+      pack={pack}
+      games={listGames().map(({ manifest }) => ({
+        slug: manifest.slug,
+        title: manifest.title,
+      }))}
+      resolvedWorld={resolvedWorld}
+      resolvedLayer={resolvedLayer}
+      recoveryMessage={recoveryMessage}
+      search={search}
+      onGameChange={(gameSlug) => {
+        const game = listGames().find(
+          ({ manifest }) => manifest.slug === gameSlug,
+        )
+        if (!game) return
+        void navigate({
+          to: '/games/$gameSlug',
+          params: { gameSlug },
+          search: {
+            ...search,
+            world: game.defaultWorldId,
+            layer: game.defaultLayerId,
+            region: game.defaultRegionId,
+            thread: undefined,
+            step: undefined,
+            discovery: undefined,
+            location: undefined,
+            cx: 0.5,
+            cy: 0.5,
+            zoom: 1,
+          },
+        })
+      }}
+      updateSearch={(patch, replace) => {
+        void navigate({
+          search: (previous) => ({ ...previous, ...patch }),
+          replace,
+        })
+      }}
     />
   )
 }
