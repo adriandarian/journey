@@ -1,6 +1,6 @@
 # Progression Atlas
 
-Progression Atlas is a local-first visual companion for tracing story prerequisites, choices, discoveries, and rewards across a game world. The first vertical slice covers a schematic Qinghe data pack inspired by *Where Winds Meet*.
+Progression Atlas is a local-first visual companion for tracing story prerequisites, choices, discoveries, and rewards across a game world. The first vertical slice covers a schematic Qinghe data pack inspired by _Where Winds Meet_.
 
 > Progression Atlas is an unofficial fan-made companion. It is not affiliated with, endorsed by, or a substitute for the game publisher or developer. Seed content is schematic and must not be presented as an authoritative walkthrough.
 
@@ -60,3 +60,18 @@ The included Qinghe pack is a hand-reviewed schematic demonstration. Quest order
 
 - [Approved design specification](docs/superpowers/specs/2026-07-11-progression-atlas-design.md)
 - [Visual fidelity ledger](docs/qa/progression-atlas-fidelity.md)
+
+## Continue in another Codex session
+
+The repository is designed to carry its own context across sessions:
+
+- [Agent entry point](AGENTS.md)
+- [Project goal, architecture, and current state](docs/PROJECT_CONTEXT.md)
+- [Continuation roadmap](docs/ROADMAP.md)
+- [Detailed continuation implementation plan](docs/superpowers/plans/2026-07-11-journey-continuation-plan.md)
+- [Session handoff template](docs/SESSION_HANDOFF.md)
+- [Completed foundation implementation plan](docs/superpowers/plans/2026-07-11-progression-atlas-implementation.md)
+
+Start a new Codex session in `~/personal/journey` with:
+
+> Read `AGENTS.md`, `docs/PROJECT_CONTEXT.md`, and `docs/ROADMAP.md`. Inspect `git status -sb` and the relevant source/tests. Summarize the current milestone and propose the smallest next testable task before editing.
