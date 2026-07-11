@@ -16,3 +16,4 @@ __unconfig*
 todos.json
 playwright-report/
 test-results/
+coverage/

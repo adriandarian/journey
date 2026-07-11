@@ -63,7 +63,7 @@ export const Route = createFileRoute('/games/$gameSlug')({
   component: GameWorkspaceRoute,
 })
 
-export function GameWorkspaceRoute() {
+function GameWorkspaceRoute() {
   const { pack, resolvedWorld, resolvedLayer, recoveryMessage } =
     Route.useLoaderData()
   const search = Route.useSearch()

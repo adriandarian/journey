@@ -65,6 +65,7 @@ export interface AtlasWorkspaceProps {
 }
 
 function AtlasWorkspaceContent(props: AtlasWorkspaceProps) {
+  const [hydrated, setHydrated] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [layersOpen, setLayersOpen] = useState(false)
   const [detailsOpen, setDetailsOpen] = useState(false)
@@ -77,7 +78,7 @@ function AtlasWorkspaceContent(props: AtlasWorkspaceProps) {
   )
   const { select: setSelection } = useAtlasSelection()
   const progressQuery = useProgress(props.pack.manifest.id)
-  const stored = progressQuery.data ?? EMPTY_PROGRESS
+  const stored = hydrated ? (progressQuery.data ?? EMPTY_PROGRESS) : EMPTY_PROGRESS
   const derived = useMemo(
     () => deriveProgress(props.pack, stored),
     [props.pack, stored],
@@ -149,6 +150,8 @@ function AtlasWorkspaceContent(props: AtlasWorkspaceProps) {
   const [recoveryNotice, setRecoveryNotice] = useState(
     props.recoveryMessage ?? invalidEntityMessage,
   )
+
+  useEffect(() => setHydrated(true), [])
 
   useEffect(() => {
     const message = props.recoveryMessage ?? invalidEntityMessage
@@ -318,6 +321,8 @@ function AtlasWorkspaceContent(props: AtlasWorkspaceProps) {
 
   return (
     <div
+      data-testid="atlas-workspace"
+      data-hydrated={hydrated}
       data-motion-preference={preferences.motion}
       data-label-density={preferences.labelDensity}
       data-compact-panels={preferences.compactPanels}

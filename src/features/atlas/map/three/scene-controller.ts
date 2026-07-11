@@ -13,6 +13,7 @@ import { createMapSurface } from './map-surface'
 import { createPoiLayer } from './poi-layer'
 import { createRouteLayer } from './route-layer'
 import { TracePlaybackController } from './trace-playback-controller'
+import { withDevelopmentStressPois } from '../test-stress-content'
 import type { Point2 } from '../../model/coordinates'
 import type { ContentPack } from '../../model/schema'
 import type { AtlasEntity } from '../../state/atlas-selection'
@@ -30,7 +31,7 @@ export interface SceneController {
   requestRender: () => void
   updateTrace: (trace: TraceModel) => void
   updateFilters: (filters: string[]) => void
-  setSelected: (selection?: AtlasEntity) => void
+  setSelected: (selection?: AtlasEntity, focus?: boolean) => void
   setCamera: (camera: { center: Point2; zoom: number }) => void
   setReducedMotion: (reducedMotion: boolean) => void
   setPaused: (paused: boolean) => void
@@ -52,16 +53,27 @@ export async function createSceneController(options: {
   onSelect: (entity: AtlasEntity) => void
   onCameraChange: (camera: { center: Point2; zoom: number }) => void
   onProjectionChange: (nodes: ProjectedTraceNode[]) => void
+  onVisiblePoiCount: (count: number) => void
 }): Promise<SceneController> {
+  const renderPack = withDevelopmentStressPois(options.pack)
   const frame = createMapFrame({
     sourceWidth: options.sourceWidth,
     sourceHeight: options.sourceHeight,
     worldWidth: 16,
   })
+  const contextAttributes: WebGLContextAttributes = {
+    alpha: true,
+    antialias: true,
+    depth: true,
+    powerPreference: 'high-performance',
+  }
+  const context =
+    options.canvas.getContext('webgl2', contextAttributes) ??
+    options.canvas.getContext('webgl', contextAttributes)
+  if (!context) throw new Error('WebGL is unavailable')
   const renderer = new WebGLRenderer({
     canvas: options.canvas,
-    antialias: true,
-    powerPreference: 'high-performance',
+    context,
   })
   renderer.setClearColor(new Color('#071116'))
   renderer.setPixelRatio(
@@ -106,11 +118,11 @@ export async function createSceneController(options: {
   const picker = new AtlasPicker()
   const playback = new TracePlaybackController()
   const locations = new Map(
-    options.pack.locations.map((location) => [location.id, location]),
+    renderPack.locations.map((location) => [location.id, location]),
   )
-  const steps = new Map(options.pack.steps.map((step) => [step.id, step]))
+  const steps = new Map(renderPack.steps.map((step) => [step.id, step]))
   const discoveries = new Map(
-    options.pack.discoveries.map((discovery) => [discovery.id, discovery]),
+    renderPack.discoveries.map((discovery) => [discovery.id, discovery]),
   )
 
   let trace = options.traceModel
@@ -129,7 +141,12 @@ export async function createSceneController(options: {
   }
 
   function updatePoiLayer() {
-    poiLayer.update(options.pack, visibleDiscoveryKinds(), camera.zoom)
+    const visibleKinds = visibleDiscoveryKinds()
+    poiLayer.update(renderPack, visibleKinds, camera.zoom)
+    options.onVisiblePoiCount(
+      renderPack.discoveries.filter((item) => visibleKinds.has(item.kind))
+        .length,
+    )
   }
 
   function projectPoint(point: Point2, width: number, height: number) {
@@ -161,7 +178,7 @@ export async function createSceneController(options: {
       x: node.x,
       y: node.y,
     }))
-    for (const discovery of options.pack.discoveries) {
+    for (const discovery of renderPack.discoveries) {
       if (!filters.includes(discovery.kind)) continue
       const location = locations.get(discovery.locationId)
       if (!location) continue
@@ -339,14 +356,14 @@ export async function createSceneController(options: {
     requestRender,
     updateTrace,
     updateFilters,
-    setSelected(selection) {
+    setSelected(selection, shouldFocus = true) {
       const key = selection ? `${selection.kind}:${selection.id}` : undefined
       if (key === selectedKey) return
       selectedKey = key
       routeLayer.setSelected(
         selection?.kind === 'step' ? selection.id : undefined,
       )
-      if (selection) {
+      if (selection && shouldFocus) {
         const point = pointForSelection(selection)
         if (point) focusPoint(point, 2.35, true)
       }

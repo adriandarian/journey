@@ -35,6 +35,7 @@ export function MapViewport(props: MapViewportProps) {
   const [lost, setLost] = useState(false)
   const [rendererMode, setRendererMode] = useState<'three' | 'canvas'>('three')
   const [paused, setPaused] = useState(false)
+  const [visiblePoiCount, setVisiblePoiCount] = useState(0)
   const [systemReducedMotion, setSystemReducedMotion] = useState(false)
   const [projectedNodes, setProjectedNodes] = useState<ProjectedTraceNode[]>([])
   const map = props.pack.maps[0]
@@ -101,13 +102,19 @@ export function MapViewport(props: MapViewportProps) {
       }
     }
     if (!props.filters.includes('objectives')) return []
+    const selectedOrder =
+      props.trace.nodes.find((node) => node.id === props.selectedStepId)
+        ?.order ?? 1
+    const lowerOrder = Math.max(1, selectedOrder - 5)
+    const upperOrder = Math.max(7, selectedOrder + 2)
     return props.trace.nodes.flatMap((node) => {
+      if (node.order < lowerOrder || node.order > upperOrder) return []
       const screen = projectionById.get(node.id)
       return screen
         ? [{ node, screen, branchKind: branchKinds.get(node.id) }]
         : []
     })
-  }, [projectedNodes, props.filters, props.trace])
+  }, [projectedNodes, props.filters, props.selectedStepId, props.trace])
 
   function activateFallback() {
     setReady(false)
@@ -153,6 +160,7 @@ export function MapViewport(props: MapViewportProps) {
           onSelect: (entity) => onSelectRef.current(entity),
           onCameraChange: (camera) => onCameraChangeRef.current(camera),
           onProjectionChange: setProjectedNodes,
+          onVisiblePoiCount: setVisiblePoiCount,
         })
         // Effect cleanup can abort while scene creation awaits texture loading.
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -161,7 +169,7 @@ export function MapViewport(props: MapViewportProps) {
           return
         }
         controllerRef.current = controller
-        controller.setSelected(selection)
+        controller.setSelected(selection, false)
         controller.setPaused(paused)
         cleanup = () => {
           controllerRef.current = undefined
@@ -279,6 +287,7 @@ export function MapViewport(props: MapViewportProps) {
       data-context-lost={lost}
       data-motion={reducedMotion ? 'reduced' : 'full'}
       data-scene-paused={paused}
+      data-visible-pois={visiblePoiCount}
       aria-label={`Interactive map for ${props.pack.manifest.title}`}
       aria-describedby="map-instructions"
       className="relative size-full overflow-hidden"

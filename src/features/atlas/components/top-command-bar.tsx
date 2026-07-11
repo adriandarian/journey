@@ -117,13 +117,17 @@ function PreferenceControls({
 }
 
 export function TopCommandBar(props: TopCommandBarProps) {
+  const updateMode = (value: string) => {
+    if (value) props.onModeChange(value as AtlasMode)
+  }
+
   return (
     <TooltipProvider>
       <div className="flex h-full items-center gap-3 px-4">
         <span className="hidden font-serif text-xl tracking-wide lg:inline">
           Progression Atlas
         </span>
-        <div className="mr-auto hidden md:block">
+        <div className="atlas-game-selector mr-auto">
           <GameSelector
             value={props.gameSlug}
             games={props.games}
@@ -134,12 +138,11 @@ export function TopCommandBar(props: TopCommandBarProps) {
           <div className="hidden xl:block">{props.status}</div>
         ) : null}
         <ToggleGroup
+          className="atlas-mode-switch"
           type="single"
           value={props.mode}
           aria-label="Atlas view"
-          onValueChange={(value) => {
-            if (value) props.onModeChange(value as AtlasMode)
-          }}
+          onValueChange={updateMode}
         >
           <ToggleGroupItem value="map">Map</ToggleGroupItem>
           <ToggleGroupItem value="thread">Thread</ToggleGroupItem>
@@ -152,7 +155,7 @@ export function TopCommandBar(props: TopCommandBarProps) {
         >
           Trace story
         </Button>
-        <Button variant="outline" onClick={props.onSearch}>
+        <Button aria-label="Search" variant="outline" onClick={props.onSearch}>
           <Search data-icon="inline-start" aria-hidden="true" />
           <span className="hidden sm:inline">Search</span>
         </Button>
@@ -273,6 +276,17 @@ export function TopCommandBar(props: TopCommandBarProps) {
           </PopoverContent>
         </Popover>
       </div>
+      <ToggleGroup
+        className="portrait-mode-nav"
+        type="single"
+        value={props.mode}
+        aria-label="Mobile atlas view"
+        onValueChange={updateMode}
+      >
+        <ToggleGroupItem value="map">Map</ToggleGroupItem>
+        <ToggleGroupItem value="thread">Thread</ToggleGroupItem>
+        <ToggleGroupItem value="timeline">Timeline</ToggleGroupItem>
+      </ToggleGroup>
     </TooltipProvider>
   )
 }

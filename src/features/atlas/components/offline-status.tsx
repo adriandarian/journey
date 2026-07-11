@@ -6,7 +6,10 @@ export function OfflineStatus(props: {
   isStale: boolean
   isPartial: boolean
 }) {
-  const offline = typeof navigator !== 'undefined' && !navigator.onLine
+  const offline =
+    typeof navigator !== 'undefined' &&
+    typeof navigator.onLine === 'boolean' &&
+    !navigator.onLine
   const state =
     offline || props.fetchStatus === 'paused'
       ? 'Offline'

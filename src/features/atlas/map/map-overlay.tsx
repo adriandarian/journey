@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils'
 import type { Point2 } from '../model/coordinates'
 import type { TraceModel, TraceNode } from './trace-model'
 
@@ -28,13 +29,30 @@ export function MapOverlay(props: {
           data-state={node.state}
           data-branch={branchKind}
           onClick={() => props.onSelect(node.id)}
-          className="pointer-events-auto absolute grid size-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-foreground bg-card/95 text-xs shadow-md data-[branch=choice]:rotate-45 data-[branch=optional]:rounded-none data-[state=locked]:border-dashed"
+          className={cn(
+            'pointer-events-auto absolute grid size-11 -translate-x-1/2 -translate-y-1/2 place-items-center',
+            branchKind === 'choice' && 'rotate-45',
+          )}
           style={{ left: screen.x, top: screen.y }}
         >
-          <span className={branchKind === 'choice' ? '-rotate-45' : undefined}>
+          <span
+            className={cn(
+              'grid size-8 place-items-center rounded-full border bg-card/90 text-xs shadow-md',
+              node.state === 'completed' &&
+                'border-primary bg-primary/20 text-primary',
+              (node.state === 'available' || node.state === 'current') &&
+                'border-primary text-primary',
+              (node.state === 'locked' || node.state === 'excluded') &&
+                'border-border text-muted-foreground',
+              branchKind === 'optional' &&
+                'rounded-sm border-[#c8a96b] text-[#c8a96b]',
+              branchKind === 'choice' &&
+                '-rotate-45 rounded-sm border-accent text-accent',
+            )}
+          >
             {node.state === 'completed'
               ? '✓'
-              : node.state === 'locked' || node.state === 'excluded'
+              : node.state === 'excluded'
                 ? '×'
                 : node.order}
           </span>

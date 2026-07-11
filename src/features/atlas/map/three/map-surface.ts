@@ -15,7 +15,7 @@ export async function createMapSurface(options: {
   const texture = await new TextureLoader().loadAsync(options.imageUrl)
   texture.colorSpace = SRGBColorSpace
   const geometry = new PlaneGeometry(options.worldWidth, options.worldHeight)
-  const material = new MeshBasicMaterial({ map: texture })
+  const material = new MeshBasicMaterial({ map: texture, color: '#b7b4ac' })
   const mesh = new Mesh(geometry, material)
   mesh.position.z = -0.1
   mesh.userData.dispose = () => {

@@ -62,7 +62,7 @@ export function createRouteLayer(frame: MapFrame): RouteLayer {
         const geometry = new THREE.TubeGeometry(
           curve,
           Math.max(8, points.length * 10),
-          segment.kind === 'optional' ? 0.022 : 0.035,
+          segment.kind === 'optional' ? 0.035 : 0.05,
           6,
           false,
         )
@@ -74,7 +74,7 @@ export function createRouteLayer(frame: MapFrame): RouteLayer {
             : segment.kind === 'optional'
               ? '#c8a96b'
               : locked
-                ? '#596263'
+                ? '#707b78'
                 : '#65c5a8'
         const material = new THREE.MeshBasicMaterial({
           color,

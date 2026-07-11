@@ -1,9 +1,11 @@
 import {
   Drawer,
+  DrawerClose,
   DrawerContent,
   DrawerHeader,
   DrawerTitle,
 } from '@/components/ui/drawer'
+import { Button } from '@/components/ui/button'
 import {
   Sheet,
   SheetContent,
@@ -23,6 +25,10 @@ export function MobileInspectorSheet(props: {
   const portrait = useMediaQuery(
     '(max-width: 800px) and (orientation: portrait)',
   )
+  const closeLabel =
+    props.title === 'Story details'
+      ? 'Close details'
+      : `Close ${props.title.toLocaleLowerCase()}`
 
   function changeOpen(open: boolean) {
     props.onOpenChange(open)
@@ -38,9 +44,14 @@ export function MobileInspectorSheet(props: {
         onOpenChange={changeOpen}
         repositionInputs={false}
       >
-        <DrawerContent className="max-h-[55dvh]">
+        <DrawerContent className="!max-h-[55dvh]">
           <DrawerHeader>
             <DrawerTitle>{props.title}</DrawerTitle>
+            <DrawerClose asChild>
+              <Button variant="ghost" size="sm" className="mx-auto mt-2">
+                {closeLabel}
+              </Button>
+            </DrawerClose>
           </DrawerHeader>
           <div className="min-h-0 overflow-auto">{props.children}</div>
         </DrawerContent>
