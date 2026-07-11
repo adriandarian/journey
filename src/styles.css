@@ -118,6 +118,12 @@ textarea {
   border-left: 1px solid var(--border);
 }
 
+.timeline-list {
+  display: flex;
+  min-width: max-content;
+  overflow: auto;
+}
+
 @media (width <= 800px) and (orientation: portrait) {
   .atlas-shell {
     grid-template:
@@ -129,6 +135,11 @@ textarea {
   .atlas-navigation,
   .atlas-inspector {
     display: none;
+  }
+
+  .timeline-list {
+    min-width: 0;
+    flex-direction: column;
   }
 }
 
