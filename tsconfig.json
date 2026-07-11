@@ -2,6 +2,7 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
+    "tests/**/*.ts",
     "eslint.config.js",
     "playwright.config.ts",
     "prettier.config.js",

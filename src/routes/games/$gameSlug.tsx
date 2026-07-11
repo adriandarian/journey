@@ -3,6 +3,8 @@ import { getGameAdapter } from '@/features/atlas/content/game-adapter'
 import '@/features/atlas/content/register-games'
 import { validateContentPack } from '@/features/atlas/model/validate-content-pack'
 import { normalizeWorkspaceSearch } from '@/features/atlas/routing/workspace-search'
+import { AppShell } from '@/features/atlas/components/app-shell'
+import { MapViewport } from '@/features/atlas/map/map-viewport'
 
 export const Route = createFileRoute('/games/$gameSlug')({
   validateSearch: normalizeWorkspaceSearch,
@@ -50,7 +52,6 @@ export const Route = createFileRoute('/games/$gameSlug')({
         .join(' ') || undefined
 
     return {
-      adapter,
       pack,
       resolvedWorld: world,
       resolvedLayer: layer,
@@ -63,8 +64,15 @@ export const Route = createFileRoute('/games/$gameSlug')({
 export function GameWorkspaceRoute() {
   const { pack } = Route.useLoaderData()
   return (
-    <main aria-label={`${pack.manifest.title} progression workspace`}>
-      {pack.manifest.title}
-    </main>
+    <AppShell
+      commandBar={
+        <div className="flex h-full items-center px-4 font-serif text-xl">
+          Progression Atlas
+        </div>
+      }
+      navigation={<div className="p-4">Main story</div>}
+      viewport={<MapViewport pack={pack} />}
+      inspector={<div className="p-4">Select a story step</div>}
+    />
   )
 }
