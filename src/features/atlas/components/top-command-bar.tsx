@@ -32,6 +32,7 @@ import {
 } from '@/components/ui/tooltip'
 import { GameSelector } from './game-selector'
 import type { AtlasPreferences } from '../progress/preferences-repository'
+import type { ReactNode } from 'react'
 
 type AtlasMode = 'map' | 'thread' | 'timeline'
 
@@ -40,6 +41,7 @@ export interface TopCommandBarProps {
   games: Array<{ slug: string; title: string }>
   mode: AtlasMode
   preferences: AtlasPreferences
+  status?: ReactNode
   onGameChange: (slug: string) => void
   onPreferencesChange: (patch: Partial<AtlasPreferences>) => void
   onModeChange: (mode: AtlasMode) => void
@@ -128,6 +130,9 @@ export function TopCommandBar(props: TopCommandBarProps) {
             onValueChange={props.onGameChange}
           />
         </div>
+        {props.status ? (
+          <div className="hidden xl:block">{props.status}</div>
+        ) : null}
         <ToggleGroup
           type="single"
           value={props.mode}

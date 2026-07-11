@@ -5,6 +5,7 @@ import { useMediaQuery } from '@/hooks/use-media-query'
 import { AppShell } from './app-shell'
 import { MobileInspectorSheet } from './mobile-inspector-sheet'
 import { NavigationRail } from './navigation-rail'
+import { OfflineStatus } from './offline-status'
 import { SearchCommand } from './search-command'
 import { StoryInspector } from './story-inspector'
 import { TopCommandBar } from './top-command-bar'
@@ -334,6 +335,16 @@ function AtlasWorkspaceContent(props: AtlasWorkspaceProps) {
             games={props.games}
             mode={props.search.mode}
             preferences={preferences}
+            status={
+              <OfflineStatus
+                fetchStatus="idle"
+                hasData
+                isStale={
+                  props.pack.manifest.version < props.adapter.manifest.version
+                }
+                isPartial={false}
+              />
+            }
             onGameChange={(slug) => {
               updatePreferences({ lastGame: slug })
               props.onGameChange(slug)
